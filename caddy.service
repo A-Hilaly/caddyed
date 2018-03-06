@@ -1,0 +1,19 @@
+[Unit]
+Description=Caddy HTTP/2 web server
+Documentation=https://caddyserver.com/docs
+After=network-online.target
+Wants=network-online.target systemd-networkd-wait-online.service
+
+[Service]
+Restart=on-abnormal
+StartLimitInterval=5
+StartLimitBurst=10
+ExecStart=/usr/local/bin/caddy -agree=true -conf=/etc/caddy/Caddyfile -root=/var/tmp
+RestartSec=60
+
+User=www-data
+Group=www-data
+Environment=CADDYPATH=/etc/ssl/caddy
+
+[Install]
+WantedBy=multi-user.targetw
